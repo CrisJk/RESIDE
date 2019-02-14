@@ -57,9 +57,9 @@ Source code for [EMNLP 2018](http://emnlp2018.org) paper: [RESIDE: Improving Dis
 
 ### Evaluate pretrained model:
 
-- `reside.py` contains TensorFlow (1.x) based implementation of RESIDE (proposed method).
+- `reside.py` contains TensorFlow (1.x) based implementation of **RESIDE** (proposed method).
 - Download the pretrained model's parameters from [RiedelNYT](https://drive.google.com/file/d/1CUk10FTncaaZspAoh8YkHTML3RJHfW7e/view?usp=sharing) and [GIDS](https://drive.google.com/file/d/1X5pKkL6eOkGXw39baq0n9noBXa--5EhE/view?usp=sharing) (put downloaded folders in `checkpoint` directory). 
-- Execute `evaluate.sh` for comparing pretrained RESIDE model against baselines (plots Precision-Recall curve). 
+- Execute `evaluate.sh` for comparing pretrained **RESIDE** model against baselines (plots Precision-Recall curve). 
 
 ### Side Information:
 
@@ -77,24 +77,35 @@ Source code for [EMNLP 2018](http://emnlp2018.org) paper: [RESIDE: Improving Dis
   python reside.py -data data/riedel_processed.pkl -name new_run
   ```
 
+* The above model needs to be further trained with SGD optimizer for few epochs to match the performance reported in the paper. For that execute
+
+  ```shell
+  python reside.py -name new_run -restore -opt sgd -lr 0.001 -l2 0.0 -epoch 4
+  ```
+
+* Finally, run `python plot_pr.py -name new_run` to get the plot.
+
 ### Preprocessing a new dataset:
 
-* The following code is for getting a new dataset in the required format (`riedel_processed.pkl`) for `reside.py`.
-* Get the data in the same format as has been put in [riedel_raw](https://drive.google.com/file/d/1D7bZPvrSAbIPaFSG7ZswYQcPA3tmouCw/view?usp=sharing) file.
-* For generating bags from sentences execute `make_bags.py`. Then, for converting generated bags to pickle format execute `final_process.py`.
+* `preproc` directory contains code for getting a new dataset in the required format (`riedel_processed.pkl`) for `reside.py`.
+* Get the data in the same format as followed in [riedel_raw](https://drive.google.com/file/d/1D7bZPvrSAbIPaFSG7ZswYQcPA3tmouCw/view?usp=sharing) for `Riedel NYT` dataset.
+* Finally, run the script `preprocess.sh`.  `make_bags.py` is used for generating bags from sentence. `generate_pickle.py` is for converting the data in the required pickle format.
 
+### Running pretrained model on new dataset:
 
+- The code for running pretrained model on a new dataset is included in `online` directory.
 
-### Citation
+### Citation:
+Please cite the following paper if you use this code in your work.
 
 ```tex
-@InProceedings{D18-1157,
+@InProceedings{reside2018,
   author = 	"Vashishth, Shikhar
 		and Joshi, Rishabh
 		and Prayaga, Sai Suman
 		and Bhattacharyya, Chiranjib
 		and Talukdar, Partha",
-  title = 	"RESIDE: Improving Distantly-Supervised Neural Relation Extraction using Side Information",
+  title = 	"{RESIDE}: Improving Distantly-Supervised Neural Relation Extraction using Side Information",
   booktitle = 	"Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
   year = 	"2018",
   publisher = 	"Association for Computational Linguistics",
